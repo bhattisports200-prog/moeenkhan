@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moeen Khan — AI Cinematic Storyteller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --deep: #0A0705;
+    --charcoal: #1A1612;
+    --warm: #2A2118;
+    --cream: #F5EDD8;
+    --muted: #9B8E7A;
+    --accent: #E85D26;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(10,7,5,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: var(--gold);
+    letter-spacing: 1px;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    padding: 8px 20px; border-radius: 6px;
+    background: var(--gold); color: var(--deep);
+    font-size: 13px; font-weight: 600;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 30%, #2A1A08 0%, #0A0705 65%);
+  }
+  .hero-glow {
+    position: absolute;
+    border-radius: 50%; filter: blur(100px); opacity: 0.15;
+  }
+  .glow1 { width: 500px; height: 500px; background: #C9A84C; top: -150px; right: -150px; }
+  .glow2 { width: 350px; height: 350px; background: #E85D26; bottom: -80px; left: -100px; }
+
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; display: inline-block;
+    width: 40px; height: 1px; background: var(--gold); opacity: 0.5;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900; line-height: 1.0;
+    color: var(--cream); margin-bottom: 0.5rem;
+  }
+  .hero-title .highlight { color: var(--gold); display: block; }
+  .hero-title .sub { font-size: clamp(1.4rem, 3.5vw, 2.8rem); color: var(--muted); font-weight: 400; font-style: italic; }
+  .hero-bio {
+    font-size: 1.05rem; color: var(--muted);
+    max-width: 520px; margin: 2rem auto;
+    line-height: 1.8;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+  .badge {
+    font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 7px 18px; border-radius: 100px;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light);
+    background: rgba(201,168,76,0.07);
+  }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 15px 36px; border-radius: 7px;
+    background: var(--gold); color: var(--deep);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 14px; letter-spacing: 0.5px;
+    border: none; cursor: pointer; text-decoration: none;
+    display: inline-block; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    padding: 15px 36px; border-radius: 7px;
+    background: transparent; color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500; font-size: 14px;
+    border: 1px solid rgba(245,237,216,0.2); cursor: pointer;
+    text-decoration: none; display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .scroll-hint {
+    margin-top: 4rem;
+    font-size: 11px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase;
+  }
+  .scroll-dot {
+    width: 5px; height: 5px; background: var(--gold);
+    border-radius: 50%; margin: 10px auto 0;
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:translateY(0);opacity:1} 50%{transform:translateY(8px);opacity:0.4} }
+
+  /* SECTION */
+  .section { padding: 6rem 2rem; max-width: 980px; margin: 0 auto; }
+  .section-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 700; color: var(--cream); margin-bottom: 1rem;
+  }
+  .section-body { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 560px; }
+
+  .hr { height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25), transparent); margin: 0 3rem; }
+
+  /* EXPERTISE */
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+    gap: 1px; background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 14px; overflow: hidden; margin-top: 3rem;
+  }
+  .exp-item {
+    padding: 1.75rem 1.5rem;
+    background: var(--charcoal);
+    transition: background 0.25s;
+  }
+  .exp-item:hover { background: var(--warm); }
+  .exp-icon {
+    font-size: 20px; margin-bottom: 1rem;
+    width: 42px; height: 42px; border-radius: 9px;
+    background: rgba(201,168,76,0.1);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .exp-name { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 0.4rem; }
+  .exp-desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
+
+  /* PROJECT */
+  .project-header {
+    background: linear-gradient(135deg, var(--charcoal), var(--warm));
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 18px; padding: 2.75rem;
+    margin-bottom: 2.5rem; position: relative; overflow: hidden;
+  }
+  .project-header::after {
+    content: '🔥';
+    position: absolute; right: 2.5rem; top: 50%; transform: translateY(-50%);
+    font-size: 90px; opacity: 0.1;
+  }
+  .viral-badge {
+    display: inline-block; margin-bottom: 1rem;
+    font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); border: 1px solid rgba(232,93,38,0.4);
+    padding: 5px 14px; border-radius: 4px;
+  }
+  .project-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--cream); margin-bottom: 0.75rem;
+  }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.75; max-width: 520px; margin-bottom: 1.5rem; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 11px; padding: 5px 13px; border-radius: 100px;
+    background: rgba(201,168,76,0.08); color: var(--gold-light);
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+
+  /* SCENES */
+  .scenes-heading {
+    font-size: 10px; font-weight: 600; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.25rem;
+  }
+  .scene-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 14px;
+  }
+  .scene-card {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.1);
+    background: var(--charcoal);
+    transition: transform 0.22s, border-color 0.22s;
+  }
+  .scene-card:hover { transform: translateY(-5px); border-color: rgba(201,168,76,0.45); }
+  .scene-visual {
+    height: 148px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px; position: relative;
+  }
+  .scene-visual::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 55%, var(--charcoal) 100%);
+  }
+  .scene-num-badge {
+    position: absolute; top: 10px; right: 10px; z-index: 2;
+    font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 100px;
+    background: rgba(10,7,5,0.85); color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.35);
+  }
+  .scene-info { padding: 13px 14px; }
+  .scene-num { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .scene-title { font-size: 13px; font-weight: 500; color: var(--cream); }
+
+  /* STATS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin-top: 3rem;
+  }
+  .stat-card {
+    background: var(--charcoal); border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 12px; padding: 1.5rem; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900; color: var(--gold); margin-bottom: 0.3rem;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px; margin-top: 3rem;
+  }
+  .service-card {
+    background: var(--charcoal); border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 14px; padding: 2rem;
+    transition: border-color 0.22s;
+  }
+  .service-card:hover { border-color: rgba(201,168,76,0.4); }
+  .svc-icon { font-size: 22px; margin-bottom: 1rem; }
+  .svc-name { font-size: 15px; font-weight: 500; color: var(--cream); margin-bottom: 0.5rem; }
+  .svc-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px; margin-top: 3rem;
+  }
+  .price-card {
+    background: var(--charcoal); border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 16px; padding: 2.25rem; position: relative; overflow: hidden;
+    transition: border-color 0.22s;
+  }
+  .price-card:hover { border-color: rgba(201,168,76,0.4); }
+  .price-card.featured { border: 2px solid var(--gold); background: linear-gradient(135deg, var(--charcoal), var(--warm)); }
+  .feat-badge {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    background: var(--gold); color: var(--deep);
+    padding: 4px 11px; border-radius: 100px;
+  }
+  .price-tier { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .price-amt { font-family: 'Playfair Display', serif; font-size: 2.75rem; font-weight: 900; color: var(--cream); }
+  .price-period { font-size: 12px; color: var(--muted); margin-bottom: 1.75rem; }
+  .price-feature { font-size: 13px; color: var(--muted); padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+  .check { color: var(--gold); margin-right: 8px; }
+
+  /* CONTACT */
+  .contact-section {
+    background: linear-gradient(135deg, var(--charcoal), var(--warm));
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 20px; padding: 3.5rem;
+    text-align: center; margin-top: 3rem;
+  }
+  .avatar {
+    width: 110px; height: 110px; border-radius: 50%;
+    border: 3px solid var(--gold);
+    margin: 0 auto 1.5rem;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--charcoal);
+  }
+  .avatar img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  }
+  .contact-name { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--cream); margin-bottom: 0.4rem; }
+  .contact-role { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem; }
+  .contact-bio { font-size: 15px; color: var(--muted); line-height: 1.8; max-width: 500px; margin: 0 auto 2rem; }
+  .contact-links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .contact-link {
+    padding: 12px 28px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .link-primary { background: var(--gold); color: var(--deep); }
+  .link-primary:hover { opacity: 0.85; }
+  .link-ghost { border: 1px solid rgba(201,168,76,0.3); color: var(--cream); }
+  .link-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 3rem 2rem;
+    border-top: 1px solid rgba(201,168,76,0.08);
+    color: var(--muted); font-size: 12px; letter-spacing: 1px;
+  }
+  .footer-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); margin-bottom: 0.5rem; }
+
+  .hero-inner {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 3rem; width: 100%; max-width: 900px;
+  }
+  .hero-photo {
+    width: 160px; height: 160px; border-radius: 50%;
+    border: 3px solid var(--gold);
+    overflow: hidden; flex-shrink: 0;
+    box-shadow: 0 0 0 6px rgba(201,168,76,0.12);
+  }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+  .hero-photo-fallback {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--gold), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; font-weight: 700; color: var(--deep);
+  }
+  @media (min-width: 700px) {
+    .hero-inner { flex-direction: row; text-align: left; align-items: center; }
+    .hero-eyebrow { justify-content: flex-start; }
+    .hero-badges { justify-content: flex-start; }
+    .hero-actions { justify-content: flex-start; }
+    .scroll-hint { text-align: left; }
+  }
+  @media (max-width: 680px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .section { padding: 4rem 1.25rem; }
+    .project-header { padding: 1.75rem; }
+    .contact-section { padding: 2rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Moeen Khan</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow glow1"></div>
+  <div class="hero-glow glow2"></div>
+
+  <div class="hero-content">
+    <div class="hero-inner">
+      <div class="hero-photo">
+        <img src="moeen-photo.png" alt="Moeen Khan" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="hero-photo-fallback" style="display:none">MK</div>
+      </div>
+      <div>
+    <div class="hero-eyebrow">AI Content Creator · Vehari, Punjab, Pakistan</div>
+    <h1 class="hero-title">
+      Moeen Khan
+      <span class="highlight">Cinematic AI</span>
+      <span class="sub">Storyteller</span>
+    </h1>
+    <p class="hero-bio">Creating viral-ready animated stories with deep emotional impact — powered by Google Gemini and advanced prompt engineering, optimized for TikTok & YouTube Shorts.</p>
+
+    <div class="hero-badges">
+      <span class="badge">Google Gemini</span>
+      <span class="badge">Prompt Engineering</span>
+      <span class="badge">Veo Workflows</span>
+      <span class="badge">Shorts & Reels</span>
+      <span class="badge">3D Characters</span>
+    </div>
+
+    <div class="hero-actions">
+      <a href="#work" class="btn-primary">View My Work ↓</a>
+      <a href="#contact" class="btn-ghost">Hire Me →</a>
+    </div>
+
+    <div class="scroll-hint">Scroll to explore <div class="scroll-dot"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-label">About Me</div>
+  <h2 class="section-title">AI Storyteller &<br>Prompt Engineer</h2>
+  <p class="section-body">I specialize in cinematic AI storytelling using Google Gemini and Veo-style workflows. My content blends emotional narratives with visually striking stylized 3D characters — engineered for maximum scroll-stop performance on global short-form platforms.</p>
+
+  <div class="exp-grid">
+    <div class="exp-item">
+      <div class="exp-icon">🎬</div>
+      <div class="exp-name">AI Image Generation</div>
+      <div class="exp-desc">Cinematic consistency across every scene using Google Gemini</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">📖</div>
+      <div class="exp-name">Story Sequences</div>
+      <div class="exp-desc">Emotional visual arcs with high audience retention</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">🚀</div>
+      <div class="exp-name">Viral Short-Form</div>
+      <div class="exp-desc">TikTok & YouTube Shorts — 9:16 vertical optimized</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">🎭</div>
+      <div class="exp-name">Character Consistency</div>
+      <div class="exp-desc">Same character, same look — across 10+ scenes</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">⚡</div>
+      <div class="exp-name">Prompt Engineering</div>
+      <div class="exp-desc">Precision prompts for stunning, production-grade outputs</div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- PROJECT SHOWCASE -->
+<section class="section" id="work">
+  <div class="section-label">Project Showcase</div>
+  <h2 class="section-title">Featured Work</h2>
+
+  <div class="project-header">
+    <div class="viral-badge">🔥 Viral Hit</div>
+    <div class="project-name">"The Peach Story" — Cinematic Drama</div>
+    <p class="project-desc">A fully AI-generated cinematic story featuring anthropomorphic fruit characters. The story follows a peach woman navigating workplace pressure, emotional conflict, and a dramatic twist involving trust and betrayal.</p>
+    <div class="tag-row">
+      <span class="tag">Google Gemini</span>
+      <span class="tag">Pixar-style 3D Rendering</span>
+      <span class="tag">10+ Consistent Scenes</span>
+      <span class="tag">9:16 Vertical Format</span>
+      <span class="tag">Emotional Drama</span>
+    </div>
+  </div>
+
+  <div class="scenes-heading">Scene-by-Scene Breakdown</div>
+  <div class="scene-grid">
+
+    <div class="scene-card">
+      <div class="scene-visual" style="background: linear-gradient(135deg, #1A2A1A, #253525);">
+        🏢<div class="scene-num-badge">Scene 01</div>
+      </div>
+      <div class="scene-info">
+        <div class="scene-num">Scene 01</div>
+        <div class="scene-title">Office Pressure</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-visual" style="background: linear-gradient(135deg, #1A1A2E, #251A35);">
+        🏠<div class="scene-num-badge">Scene 02</div>
+      </div>
+      <div class="scene-info">
+        <div class="scene-num">Scene 02</div>
+        <div class="scene-title">Emotional Return Home</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-visual" style="background: linear-gradient(135deg, #2E1A1A, #3A1515);">
+        💔<div class="scene-num-badge">Scene 03</div>
+      </div>
+      <div class="scene-info">
+        <div class="scene-num">Scene 03</div>
+        <div class="scene-title">Relationship Conflict</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-visual" style="background: linear-gradient(135deg, #0A0A1E, #150A25);">
+        🌙<div class="scene-num-badge">Scene 04</div>
+      </div>
+      <div class="scene-info">
+        <div class="scene-num">Scene 04</div>
+        <div class="scene-title">Night Tension</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-visual" style="background: linear-gradient(135deg, #2E1A2E, #3A153A);">
+        🌸<div class="scene-num-badge">Scene 05</div>
+      </div>
+      <div class="scene-info">
+        <div class="scene-num">Scene 05</div>
+        <div class="scene-title">Pregnancy Reveal</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-visual" style="background: linear-gradient(135deg, #1A2E10, #253A15);">
+        🎉<div class="scene-num-badge">Scene 06</div>
+      </div>
+      <div class="scene-info">
+        <div class="scene-num">Scene 06</div>
+        <div class="scene-title">Happy Reaction</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-visual" style="background: linear-gradient(135deg, #1A1A2E, #251A1A);">
+        🏥<div class="scene-num-badge">Scene 07</div>
+      </div>
+      <div class="scene-info">
+        <div class="scene-num">Scene 07</div>
+        <div class="scene-title">Hospital Twist</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-visual" style="background: linear-gradient(135deg, #2E1010, #3A0A0A);">
+        ⚡<div class="scene-num-badge">Scene 08</div>
+      </div>
+      <div class="scene-info">
+        <div class="scene-num">Scene 08</div>
+        <div class="scene-title">Final Confrontation</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">10+</div><div class="stat-label">Consistent scenes</div></div>
+    <div class="stat-card"><div class="stat-num">9:16</div><div class="stat-label">Shorts optimized</div></div>
+    <div class="stat-card"><div class="stat-num">Pixar</div><div class="stat-label">Style rendering</div></div>
+    <div class="stat-card"><div class="stat-num">Viral</div><div class="stat-label">Audience retention</div></div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-label">What I Offer</div>
+  <h2 class="section-title">Services</h2>
+  <p class="section-body">From concept to final scene — I handle the complete AI story pipeline for individuals, brands, and agencies worldwide.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="svc-icon">🎬</div>
+      <div class="svc-name">AI Story Video Creation</div>
+      <div class="svc-desc">Full cinematic stories for Shorts & Reels — concept, scenes, and final output delivered.</div>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">✍️</div>
+      <div class="svc-name">Cinematic Prompt Design</div>
+      <div class="svc-desc">Precision-engineered prompts for Gemini and Midjourney-style workflows.</div>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">🎭</div>
+      <div class="svc-name">Character Consistency Systems</div>
+      <div class="svc-desc">Same character, same look and feel — maintained across every single scene.</div>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">📝</div>
+      <div class="svc-name">Viral Story Script Writing</div>
+      <div class="svc-desc">Emotionally-driven scripts built for maximum engagement and shareability.</div>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">🖼️</div>
+      <div class="svc-name">Image-to-Video Workflows</div>
+      <div class="svc-desc">Storyboard to animated sequence — complete AI pipelines for motion content.</div>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">🍑</div>
+      <div class="svc-name">Custom Character Stories</div>
+      <div class="svc-desc">Fruit characters, human cinematic stories — dramatic, emotional, or comedy content.</div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="section-label">Packages</div>
+  <h2 class="section-title">Simple, Clear Pricing</h2>
+  <p class="section-body">Flexible packages for every client — perfect for Fiverr and Upwork orders worldwide.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Basic</div>
+      <div class="price-amt">$10</div>
+      <div class="price-period">3 cinematic scenes · images</div>
+      <div class="price-feature"><span class="check">✦</span>3 AI-generated images</div>
+      <div class="price-feature"><span class="check">✦</span>Character consistency</div>
+      <div class="price-feature"><span class="check">✦</span>9:16 vertical format</div>
+      <div class="price-feature"><span class="check">✦</span>2-day delivery</div>
+    </div>
+
+    <div class="price-card featured">
+      <div class="feat-badge">Most Popular</div>
+      <div class="price-tier">Standard</div>
+      <div class="price-amt">$25</div>
+      <div class="price-period">8–10 scenes · full story</div>
+      <div class="price-feature"><span class="check">✦</span>8–10 cinematic scenes</div>
+      <div class="price-feature"><span class="check">✦</span>Complete emotional arc</div>
+      <div class="price-feature"><span class="check">✦</span>Shorts-ready format</div>
+      <div class="price-feature"><span class="check">✦</span>3-day delivery</div>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tier">Premium</div>
+      <div class="price-amt">$50+</div>
+      <div class="price-period">Full story + video prompts</div>
+      <div class="price-feature"><span class="check">✦</span>Complete cinematic story</div>
+      <div class="price-feature"><span class="check">✦</span>Video prompt scripts included</div>
+      <div class="price-feature"><span class="check">✦</span>Custom characters</div>
+      <div class="price-feature"><span class="check">✦</span>Priority support</div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Let's Work Together</h2>
+
+  <div class="contact-section">
+    <div class="avatar"><img src="moeen-photo.png" alt="Moeen Khan" onerror="this.parentElement.innerHTML='<span style=\'font-family:Playfair Display,serif;font-size:1.6rem;font-weight:700;color:#C9A84C\'>MK</span>'"></div>
+    <div class="contact-name">Moeen Khan</div>
+    <div class="contact-role">AI Cinematic Storyteller · Vehari, Punjab, Pakistan</div>
+    <p class="contact-bio">AI storyteller creating viral cinematic content using Gemini & advanced prompt engineering. Specialized in short-form emotional stories that stop the scroll — for clients worldwide.</p>
+    <div class="contact-links">
+      <a href="https://www.fiverr.com" target="_blank" class="contact-link link-primary">Order on Fiverr →</a>
+      <a href="https://www.upwork.com" target="_blank" class="contact-link link-ghost">Find Me on Upwork</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Moeen Khan</div>
+  AI Cinematic Storyteller · Vehari, Punjab, Pakistan · Powered by Google Gemini & Prompt Engineering
+</footer>
+
+</body>
+</html>
